@@ -12,7 +12,7 @@
         },
       "dev": {
         "environment_variables": {
-                "API_ENDPOINT": "https://chat.sample.oranie.net/api/"
+                "API_ENDPOINT": "https://chat.example.com/api/"
             }
         }
     }
