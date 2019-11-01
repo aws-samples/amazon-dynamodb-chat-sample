@@ -1,0 +1,44 @@
+version: 0.2
+
+#env:
+  #variables:
+     # key: "value"
+     # key: "value"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #Ubuntu 標準イメージ 2.0 以降を使用する場合、ランタイムバージョンを指定する必要があります。
+    #ランタイムバージョンを指定して、Ubuntu 標準イメージ 2.0 以外のイメージを使用すると、ビルドは失敗します。
+    runtime-versions:
+       python: 3.7
+       java: corretto8
+    commands:
+       - pip install --user -r requirements.txt
+       - pip install --user -r test_requirements.txt
+  pre_build:
+    commands:
+       - wget https://s3-us-west-2.amazonaws.com/dynamodb-local/dynamodb_local_latest.tar.gz
+       - tar zxvf ./dynamodb_local_latest.tar.gz
+       - nohup java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory & disown $!
+  build:
+    commands:
+       - flake8
+       - pytest -vv
+  post_build:
+    commands:
+       - echo 'done'
+        
+#artifacts:
+  #files:
+    # - location
+    # - location
+  #name: $(date +%Y-%m-%d)
+  #discard-paths: yes
+  #base-directory: location
+#cache:
+  #paths:
+    # - paths

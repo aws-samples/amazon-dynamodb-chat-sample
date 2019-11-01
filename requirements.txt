@@ -1,0 +1,7 @@
+pytest
+boto3
+chalice
+flake8
+moto
+pytest-chalice
+pytest-env

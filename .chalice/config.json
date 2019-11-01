@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "app_name": "dynamodb-python-chat-sample",
+    "autogen_policy": false,
+    "lambda_memory_size": 2048,
+    "stages": {
+        "local": {
+          "api_gateway_stage": "api",
+            "environment_variables": {
+                "API_ENDPOINT": "localhost"
+            }
+        },
+      "dev": {
+        "environment_variables": {
+                "API_ENDPOINT": "https://chat.sample.oranie.net/api/"
+            }
+        }
+    }
+}
