@@ -1,0 +1,22 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/python:3.7.4
+            - image: amazon/dynamodb-local
+        environment:
+          - DYNAMODB_ENDPOINT: "http://localhost:8000"
+          - AWS_ACCESS_KEY_ID: "test_user"
+          - AWS_SECRET_ACCESS_KEY: "test_key"
+          - API_ENDPOINT: "localhost"
+        steps:
+            - run: echo 'export PATH=/home/circleci/.local/bin:${PATH}' >> ${BASH_ENV}
+            - checkout
+            - run:
+                command: |
+                  pip install --user -r requirements.txt
+                  pip install --user -r test_requirements.txt
+            - run:
+                command: |
+                  flake8
+                  pytest -vv

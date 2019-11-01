@@ -1,0 +1,218 @@
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CMutationObserver"
+            crossorigin="anonymous"></script>
+
+    <!-- Load Vue followed by BootstrapVue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <div class="border-top">{{ title }}</div>
+    <button v-on:click="refresh" class="btn btn-primary">Refresh server status
+    </button>
+    <table class="table">
+        <tr v-for="server_status">
+            <td>{{ server_status.status }}</td>
+        </tr>
+    </table>
+</div>
+
+<div id="add">
+    <div class="border-top">Comment</div>
+    <form @submit.prevent="addHandler">
+        <div class="form-row">
+            <div class="col">
+                <label>Name</label>
+                <input
+                        class="form-control"
+                        v-model="form.name"
+                        type="text"
+                        required
+                        placeholder="Please set user name">
+            </div>
+            <div class="col">
+                <label>Comment</label>
+                <input
+                        class="form-control"
+                        v-model="form.comment"
+                        type="text"
+                        title="comment"
+                        placeholder="Please write comment.">
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Submit
+            </button>
+        </div>
+    </form>
+
+    <pre>{{ result }}</pre>
+</div>
+
+<div id="latest">
+    <div class="border-top">Latest comment list(Auto reload: 3sec period)</div>
+    <button v-on:click="get_latest" class="btn btn-primary">latest comments</button>
+
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Comment</th>
+        </tr>
+        </thead>
+        <tr v-for="comment in latest_comments.response">
+            <td>{{ comment.time }}</td>
+            <td>{{ comment.name }}</td>
+            <td>{{ comment.comment }}</td>
+        </tr>
+    </table>
+</div>
+
+<div id="all">
+    <div class="border-top">All comment list</div>
+    <button v-on:click="get_all" class="btn btn-primary">all comments
+    </button>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Comment</th>
+        </tr>
+        </thead>
+        <tr v-for="comment in all_comments.response">
+            <td>{{ comment.stream_seq_id }}</td>
+            <td>{{ comment.name }}</td>
+            <td>{{ comment.comment }}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            title: "Chat powerd by DynamoDB",
+            server_status: []
+        },
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        },
+        methods: {
+            refresh: function (e) {
+                axios.get('http://localhost:8080/', {}).then(
+                    response => {
+                    this.server_status = response.data;
+            })
+                ;
+            }
+        }
+    });
+</script>
+
+<script>
+    var add = new Vue({
+        el: "#add",
+        data() {
+            return {
+                form: {},
+                result: {},
+                url: {},
+                latest_comments: {},
+                latest_id: ''
+            }
+        },
+        methods: {
+            addHandler: function () {
+                this.onsubmit();
+            },
+            onsubmit: function () {
+                axios.post('http://localhost:8080/chat/comments/add', {
+                    name: this.form.name,
+                    comment: this.form.comment
+                }).then(
+                    response => {
+                    this.result = Object.assign({}, this.form, this.server_status = response.data);
+                this.url = 'http://localhost:8080/chat/comments/latest/' + this.result.comment_seq_id;
+                /*
+                axios.get(this.url, {}).then(
+                    response => {
+                    this.latest_comments = response.data;
+                });*/
+            })
+
+            }
+        }
+    });
+</script>
+
+<script>
+    var latest_comments = new Vue({
+        el: "#latest",
+        data: {
+            latest_comments: []
+        },
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        },
+        "methods": {
+            get_latest: function (e) {
+                /*
+                Todo set seq id API call
+                 */
+
+                axios.get('http://localhost:8080/chat/comments/latest', {}).then(
+                    response => {
+                    this.latest_comments = response.data;
+            })
+                ;
+            }
+        },
+        mounted: function () {
+            setInterval(this.get_latest, 3000)
+        },
+        destroyed: function () {
+        }
+    });
+</script>
+
+<script>
+    var all_comments = new Vue({
+        el: "#all",
+        data: {
+            all_comments: []
+        },
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+        },
+        methods: {
+            get_all: function (e) {
+                axios.get('http://localhost:8080/chat/comments/all', {}).then(
+                    response => {
+                    this.all_comments = response.data;
+            })
+                ;
+            }
+        }
+    });
+</script>
+</body>
+</html></body>
