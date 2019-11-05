@@ -62,7 +62,7 @@ https://github.com/aws/chalice#credentials
 Please create DDB local or local DDB test envroiment.
 
 # Production Deploy
-##1st step : 1st chalice deploy
+## 1st step : 1st chalice deploy
 
 ```$xslt
 chalice deploy
