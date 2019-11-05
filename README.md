@@ -59,6 +59,10 @@ https://github.com/aws/chalice#credentials
 If you set API_ENDPOINT environment value 'localhost' is using DynamoDB Local 
  (ex: export API_ENDPOINT=localhost)
 
+ # example : DynamoDB local setup command
+ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -port 8000 -inMemory
+
+ # chalice local start up
  chalice local --stage local --port 8080
 ```
 
@@ -110,6 +114,8 @@ chalice deploy
 ```
 
 ## Python Test
+
+pytest should be run without a chat table. If there is an existing table, the test will fail. 
 
 Project root dir "pytest -vv" 
 
