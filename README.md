@@ -125,12 +125,22 @@ GSI
 |---|---|---|---|
 |string  |string(micro sec unixtime)  |string  |string |
 
+
+## NoSQL  Workbench for DynamoDB capture
+
+![table](./table.png)
+
+![table_sample](./table_sample.png)
+
+![GSI_sample](./GSI_sample.png)
+
+this test data json is amazon_dynamodb_chat_sample.json
+
+## API
+
 * /chat
 
 return chat client HTML and js.
-
-
-## API
     
 * /chat/comments/add
 

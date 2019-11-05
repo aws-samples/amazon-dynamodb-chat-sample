@@ -1,0 +1,86 @@
+{
+  "ModelName": "amazon_dynamodb_chat_sample",
+  "ModelMetadata": {
+    "Author": "jp_nosql",
+    "DateCreated": "Nov 05, 2019, 2:30 PM",
+    "DateLastModified": "Nov 05, 2019, 2:34 PM",
+    "Description": "https://github.com/aws-samples/amazon-dynamodb-chat-sample"
+  },
+  "DataModel": [
+    {
+      "TableName": "chat",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "name",
+          "AttributeType": "S"
+        },
+        "SortKey": {
+          "AttributeName": "time",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "comment",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "chat_room",
+          "AttributeType": "S"
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "chat_room_time_idx",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "chat_room",
+              "AttributeType": "S"
+            },
+            "SortKey": {
+              "AttributeName": "time",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "TableData": [
+        {
+          "name": {
+            "S": "Alice"
+          },
+          "time": {
+            "S": "1000000"
+          },
+          "comment": {
+            "S": "1st comment"
+          },
+          "chat_room": {
+            "S": "chat"
+          }
+        },
+        {
+          "name": {
+            "S": "Bob"
+          },
+          "time": {
+            "S": "1000001"
+          },
+          "comment": {
+            "S": "2nd"
+          },
+          "chat_room": {
+            "S": "chat"
+          }
+        },
+        {}
+      ],
+      "DataAccess": {
+        "MySql": {}
+      }
+    }
+  ]
+}
