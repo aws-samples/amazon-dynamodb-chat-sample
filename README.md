@@ -56,7 +56,10 @@ https://github.com/aws/chalice#credentials
 
 ### local app start
 ```$xslt
- chalice local --stage local
+If you set API_ENDPOINT environment value 'localhost' is using DynamoDB Local 
+ (ex: export API_ENDPOINT=localhost)
+
+ chalice local --stage local --port 8080
 ```
 
 Please create DDB local or local DDB test envroiment.
