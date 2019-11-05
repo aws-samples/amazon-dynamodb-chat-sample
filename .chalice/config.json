@@ -12,7 +12,7 @@
         },
       "dev": {
         "environment_variables": {
-                "API_ENDPOINT": "https://chat.example.com/api/"
+                "API_ENDPOINT": "https://your_API_ENDPOINT"
             }
         }
     }

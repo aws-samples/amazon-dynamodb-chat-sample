@@ -1,7 +1,9 @@
 ## This project is Amazon DynamoDB training and demo app.
 
 
-[![CircleCI](https://circleci.com/gh/oranie/dynamodb-chat-sample.svg?style=svg&circle-token=6eebe369e6b10d91159a3eff57f8f4b58cff4fef)](https://circleci.com/gh/oranie/dynamodb-chat-sample)
+![codebuild](https://codebuild.ap-northeast-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiL1RBME9sdkZScDFhMjc4M1NhTE1JK3VjUVppaXZURzdRb3dwaXRmVktDWkR4Sy9pMEppcGczU2JnNDVldHg1RkZsaHNCTno4Z2UwWmNmNzBKKzRYdjRBPSIsIml2UGFyYW1ldGVyU3BlYyI6InI1UXVGUFBPYzFJMkJTSDQiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
+
 
 Realtime Comment Demo App
 
@@ -123,12 +125,22 @@ GSI
 |---|---|---|---|
 |string  |string(micro sec unixtime)  |string  |string |
 
+
+## NoSQL  Workbench for DynamoDB capture
+
+![table](./table.png)
+
+![table_sample](./table_sample.png)
+
+![GSI_sample](./GSI_sample.png)
+
+this test data json is amazon_dynamodb_chat_sample.json
+
+## API
+
 * /chat
 
 return chat client HTML and js.
-
-
-## API
     
 * /chat/comments/add
 
