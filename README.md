@@ -155,7 +155,7 @@ return chat client HTML and js.
 
 client sent post request with name,comment txt, get response add comment status
 
-POST value {'name':''oranie','comment':'hello world'}
+POST value {"name": "oranie", "comment":"hello world"}
 
 
 * /chat/comments/all
