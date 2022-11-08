@@ -13,7 +13,7 @@ Realtime Comment Demo App
 ## High level architecture
 ![architecture](./demo_arch.png)
 
-## Envroiment
+## Environment
 DynamoDB (using GSI)
 
 Python 3.7.3+
